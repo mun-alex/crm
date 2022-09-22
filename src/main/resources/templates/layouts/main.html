@@ -21,22 +21,68 @@
     <div class="container">
         <div class="row justify-content-between">
             <div class="col align-self-center">
-                <a th:href="@{'/'}" class="nav-link text-dark fw-bold">CRM Система</a>
+                <a th:href="@{'/'}" class="nav-link text-white fw-bold">CRM Система</a>
             </div>
             <div class="col">
                 <ul class="nav justify-content-end">
-                    <li class="nav-item"><a href="#" class="nav-link text-dark">Все Заявки</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link text-dark">Новые Заявки</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link text-dark">Обработанные Зявки</a></li>
-                    <li class="nav-item"><a th:href="@{'/add-request'}" class="nav-link text-dark">+ Добавить заявку</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link text-white">Все Заявки</a></li>
+                    <li class="nav-item"><a th:href="@{'/unhandled-requests'}" class="nav-link text-white">Новые Заявки</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link text-white">Обработанные Зявки</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link text-dark"
+                                            data-bs-toggle="modal" data-bs-target="#addRequest">+ Добавить заявку</a></li>
                 </ul>
             </div>
         </div>
     </div>
-
 </header>
 <div class="container">
     <div layout:fragment="content"></div>
 </div>
+
+<!--Modal-->
+<div class="modal fade" id="addRequest" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">New Request</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{'/add-request'}" method="post" class="mx-auto mb-5" th:object="${newRequest}">
+                    <div class="mb-3">
+                        <label for="userName" class="form-label">User Name</label>
+                        <input type="text" class="form-control" id="userName" placeholder="insert user name" th:field="*{userName}" required>
+                    </div>
+                    <div class="form-floating">
+                        <select class="form-select" id="courseName" aria-label="Floating label select example" th:field="*{courseName}">
+                            <option value="Java Start">Java Start</option>
+                            <option value="Java Pro">Java Pro</option>
+                            <option value="Java EE">Java EE</option>
+                            <option value="Java Spring">Java Spring</option>
+                            <option value="Python">Python</option>
+                            <option value="PHP">PHP</option>
+                            <option value="Web">Web</option>
+                        </select>
+                        <label for="courseName" class="form-label">Course Name</label>
+                    </div>
+                    <div class="mb-3">
+                        <label for="comment" class="form-label">Comment</label>
+                        <textarea id="comment" cols="30" rows="5" class="form-control" th:field="*{comment}"></textarea>
+                        <div class="mb-3">
+                            <label for="phoneNumber" class="form-label">Phone</label>
+                            <input type="number" class="form-control" id="phoneNumber" placeholder="insert phone number" th:field="*{phone}" required>
+                        </div>
+                        <div class="modal-footer">
+                            <a th:href="@{'/'}" class="btn btn-secondary">CLose</a>
+                            <button type="submit" class="btn btn-success">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 </body>
 </html>

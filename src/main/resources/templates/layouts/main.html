@@ -17,23 +17,71 @@
 </head>
 <body>
 
-<header class="bg-success p-2 text-dark bg-opacity-75">
+<!--<header class="bg-success p-2 text-dark bg-opacity-75">-->
+<header>
+<!--    <div class="container">-->
+<!--        <div class="row justify-content-between">-->
+<!--            <div class="col align-self-center">-->
+<!--                <a th:href="@{'/'}" class="nav-link text-white fw-bold">CRM Система</a>-->
+<!--            </div>-->
+<!--            <div class="col">-->
+<!--                <ul class="nav justify-content-end">-->
+<!--                    <li class="nav-item"><a href="#" class="nav-link text-white">Все Заявки</a></li>-->
+<!--                    <li class="nav-item"><a th:href="@{'/unhandled-requests'}" class="nav-link text-white">Новые Заявки</a></li>-->
+<!--                    <li class="nav-item"><a href="#" class="nav-link text-white">Обработанные Зявки</a></li>-->
+<!--                    <li class="nav-item"><a href="#" class="nav-link text-dark"-->
+<!--                                            data-bs-toggle="modal" data-bs-target="#addRequest">+ Добавить заявку</a></li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
     <div class="container">
-        <div class="row justify-content-between">
-            <div class="col align-self-center">
-                <a th:href="@{'/'}" class="nav-link text-white fw-bold">CRM Система</a>
+        <nav class="navbar bg-success p-2 text-dark bg-opacity-75">
+            <div class="container-fluid">
+                <a class="navbar-brand text-white" th:href="@{'/'}">CRM Система</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">CRM Система</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" th:href="@{'/'}">Все заявки</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{'/unhandled-requests'}">Новые заявки</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{'/handled-requests'}">Обработанные заявки</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#addRequest">+ Добавить заявку</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Справочники
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" th:href="@{'/courses'}">Курсы</a></li>
+                                    <li><a class="dropdown-item" href="#">Операторы</a></li>
+                                    <!--                                <li>-->
+                                    <!--                                    <hr class="dropdown-divider">-->
+                                    <!--                                </li>-->
+                                    <!--                                <li><a class="dropdown-item" href="#">Something else here</a></li>-->
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div class="col">
-                <ul class="nav justify-content-end">
-                    <li class="nav-item"><a href="#" class="nav-link text-white">Все Заявки</a></li>
-                    <li class="nav-item"><a th:href="@{'/unhandled-requests'}" class="nav-link text-white">Новые Заявки</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link text-white">Обработанные Зявки</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link text-dark"
-                                            data-bs-toggle="modal" data-bs-target="#addRequest">+ Добавить заявку</a></li>
-                </ul>
-            </div>
-        </div>
+        </nav>
     </div>
+
+
 </header>
 <div class="container">
     <div layout:fragment="content"></div>

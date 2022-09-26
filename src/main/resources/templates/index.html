@@ -4,16 +4,16 @@
       layout:decorate="layouts/main">
 <body>
 <div layout:fragment="content">
-    <div class="row row-cols-2 g-2 mt-5">
+    <div class="row row-cols-3 g-2 mt-5">
         <div class="col" th:each="request : ${requestList}">
             <div class="border border-success p-3">
                 <div class="d-flex fw-bold">
-                    <h5 th:if="${request.isHandled()}" th:text="'(*Новая) '" style="color: red;"></h5>
+                    <h5 th:if="${!request.isHandled()}" th:text="'*(Новая)'" style="color: red;"></h5>
                     <h5 th:text="'Заявка от ' + ${request.userName}"></h5>
                 </div>
-                <h6 th:text="${request.courseName}"></h6>
+                <h6 th:text="'Курс: ' + ${request.course.name}"></h6>
                 <p th:text="${request.comment}"></p>
-                <p th:text="${request.phone}"></p>
+                <p th:text="'Тел: ' + ${request.phone}"></p>
                 <a th:href="@{'/handle-request/' + ${request.getId()}}" class="btn btn-primary">Подробнее</a>
             </div>
         </div>

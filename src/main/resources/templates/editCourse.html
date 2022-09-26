@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
+      layout:decorate="layouts/main">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="row">
+        <div class="col-lg-6 mx-auto mt-5">
+            <form th:action="@{'/edit-course/' + ${editCourse.getId()}}" method="post" class="mx-auto mb-5"
+                  th:object="${editCourse}">
+                <h3 class="fw-bold">Редактировать Курс</h3>
+                <div class="mb-3">
+                    <label for="courseName" class="form-label">Название курса</label>
+                    <input type="text" class="form-control" id="courseName" placeholder="Введите наименование курса"
+                           th:field="*{name}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="courseDescription" class="form-label">Описание</label>
+                    <textarea id="courseDescription" cols="30" rows="5" class="form-control" th:field="*{description}"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="coursePrice" class="form-label">Цена</label>
+                    <input type="number" class="form-control" id="coursePrice" placeholder="Введите цену"
+                           th:field="*{price}" required>
+                </div>
+                <a th:href="@{'/'}" class="btn btn-secondary">На главную</a>
+                <button type="submit" class="btn btn-success">Сохранить изменения</button>
+                <a th:href="@{'/delete-course/' + ${editCourse.getId()}}" class="btn btn-danger">Удалить Курс</a>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

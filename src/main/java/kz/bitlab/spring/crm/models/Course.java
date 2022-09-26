@@ -9,30 +9,25 @@ import org.springframework.stereotype.Component;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "requests")
+@Table(name = "courses")
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Component
-public class ApplicationRequest {
+public class Course {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "user_name")
-    private String userName;
+    @Column(name = "name")
+    private String name;
 
-    @Column(name = "comment")
-    private String comment;
+    @Column(name = "description")
+    private String description;
 
-    @Column(name = "phone")
-    private String phone;
-
-    @Column(name = "handled")
-    private boolean handled;
-
-    @ManyToOne
-    private Course course;
+    @Column(name = "price")
+    private int price;
 }

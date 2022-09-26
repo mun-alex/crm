@@ -16,23 +16,55 @@
     <title>CRM</title>
 </head>
 <body>
-
-<header class="bg-success p-2 text-dark bg-opacity-75">
-    <div class="container">
-        <div class="row justify-content-between">
-            <div class="col align-self-center">
-                <a th:href="@{'/'}" class="nav-link text-white fw-bold">CRM Система</a>
+<header>
+    <div>
+        <nav class="navbar bg-success p-2 text-dark bg-opacity-75">
+            <div class="container-fluid">
+                <a class="navbar-brand text-white" th:href="@{'/'}">CRM Система</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+                     aria-labelledby="offcanvasNavbarLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">CRM Система</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" th:href="@{'/'}">Все заявки</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{'/unhandled-requests'}">Новые заявки</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{'/handled-requests'}">Обработанные заявки</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#addRequest">Добавить
+                                    заявку</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                   aria-expanded="false">
+                                    Справочники
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" th:href="@{'/courses'}">Курсы</a></li>
+                                    <li><a class="dropdown-item" href="#">Операторы</a></li>
+                                    <!--                                <li>-->
+                                    <!--                                    <hr class="dropdown-divider">-->
+                                    <!--                                </li>-->
+                                    <!--                                <li><a class="dropdown-item" href="#">Something else here</a></li>-->
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div class="col">
-                <ul class="nav justify-content-end">
-                    <li class="nav-item"><a href="#" class="nav-link text-white">Все Заявки</a></li>
-                    <li class="nav-item"><a th:href="@{'/unhandled-requests'}" class="nav-link text-white">Новые Заявки</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link text-white">Обработанные Зявки</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link text-dark"
-                                            data-bs-toggle="modal" data-bs-target="#addRequest">+ Добавить заявку</a></li>
-                </ul>
-            </div>
-        </div>
+        </nav>
     </div>
 </header>
 <div class="container">
@@ -44,37 +76,34 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">New Request</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Новая Заявка</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form th:action="@{'/add-request'}" method="post" class="mx-auto mb-5" th:object="${newRequest}">
                     <div class="mb-3">
-                        <label for="userName" class="form-label">User Name</label>
-                        <input type="text" class="form-control" id="userName" placeholder="insert user name" th:field="*{userName}" required>
+                        <label for="userName" class="form-label">Имя пользователя</label>
+                        <input type="text" class="form-control" id="userName" placeholder="insert user name"
+                               th:field="*{userName}" required>
                     </div>
                     <div class="form-floating">
-                        <select class="form-select" id="courseName" aria-label="Floating label select example" th:field="*{courseName}">
-                            <option value="Java Start">Java Start</option>
-                            <option value="Java Pro">Java Pro</option>
-                            <option value="Java EE">Java EE</option>
-                            <option value="Java Spring">Java Spring</option>
-                            <option value="Python">Python</option>
-                            <option value="PHP">PHP</option>
-                            <option value="Web">Web</option>
+                        <select class="form-select" id="courseName" aria-label="Floating label select example"
+                                th:field="*{course}">
+                            <option th:each="course : ${courseList}" th:value="${course.id}" th:text="${course.name} + ' | ' + ${course.price}"></option>
                         </select>
-                        <label for="courseName" class="form-label">Course Name</label>
+                        <label for="courseName" class="form-label">Выберите курс</label>
                     </div>
                     <div class="mb-3">
-                        <label for="comment" class="form-label">Comment</label>
+                        <label for="comment" class="form-label">Комментарий</label>
                         <textarea id="comment" cols="30" rows="5" class="form-control" th:field="*{comment}"></textarea>
                         <div class="mb-3">
                             <label for="phoneNumber" class="form-label">Phone</label>
-                            <input type="number" class="form-control" id="phoneNumber" placeholder="insert phone number" th:field="*{phone}" required>
+                            <input type="number" class="form-control" id="phoneNumber" placeholder="insert phone number"
+                                   th:field="*{phone}" required>
                         </div>
                         <div class="modal-footer">
-                            <a th:href="@{'/'}" class="btn btn-secondary">CLose</a>
-                            <button type="submit" class="btn btn-success">Save</button>
+                            <a th:href="@{'/'}" class="btn btn-secondary">Закрыть</a>
+                            <button type="submit" class="btn btn-success">Отправить</button>
                         </div>
                     </div>
                 </form>
@@ -82,7 +111,5 @@
         </div>
     </div>
 </div>
-
-
 </body>
 </html>

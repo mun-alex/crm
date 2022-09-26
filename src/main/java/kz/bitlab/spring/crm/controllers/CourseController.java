@@ -19,9 +19,13 @@ public class CourseController {
     @Autowired
     private ApplicationRequest applicationRequest;
 
+    @Autowired
+    private Course course;
+
     @GetMapping(value = "/courses")
     String getAllCourses(Model model) {
         model.addAttribute("newRequest", applicationRequest);
+        model.addAttribute("newCourse", course);
         model.addAttribute("courseList", courseRepository.findAll());
         return "courses";
     }
@@ -29,12 +33,13 @@ public class CourseController {
     @PostMapping(value = "/add-course")
     String addCourse(@ModelAttribute(name = "newCourse") Course newCourse) {
         courseRepository.save(newCourse);
-        return "redirect: /courses";
+        return "redirect:/courses";
     }
 
     @GetMapping(value = "/edit-course/{id}")
     String getEditCourseForm(Model model,
                       @PathVariable(name = "id") Long id) {
+        model.addAttribute("newRequest", applicationRequest);
         model.addAttribute("editCourse", courseRepository.findById(id).orElseThrow());
         return "editCourse";
     }
@@ -44,12 +49,12 @@ public class CourseController {
                       @PathVariable(name = "id") Long id) {
         editCourse.setId(id);
         courseRepository.save(editCourse);
-        return "courses";
+        return "redirect:/courses";
     }
 
     @GetMapping(value = "/delete-course/{id}")
     String deleteCourse(@PathVariable(name = "id") Long id) {
         courseRepository.deleteById(id);
-        return "courses";
+        return "redirect:/courses";
     }
 }

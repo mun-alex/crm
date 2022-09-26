@@ -1,6 +1,7 @@
 package kz.bitlab.spring.crm.controllers;
 
 import kz.bitlab.spring.crm.models.ApplicationRequest;
+import kz.bitlab.spring.crm.repository.CourseRepository;
 import kz.bitlab.spring.crm.repository.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,9 +18,13 @@ public class MainController {
     @Autowired
     private ApplicationRequest applicationRequest;
 
+    @Autowired
+    private CourseRepository courseRepository;
+
     @GetMapping(value = "/")
     public String getIndex(Model model) {
         model.addAttribute("newRequest", applicationRequest);
+        model.addAttribute("courseList", courseRepository.findAll());
         model.addAttribute("requestList", requestRepository.findAll());
         return "index";
     }

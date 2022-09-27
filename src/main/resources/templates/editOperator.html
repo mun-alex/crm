@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
+      layout:decorate="layouts/main">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="row">
+        <div class="col-lg-6 mx-auto mt-5">
+            <form th:action="@{'/edit-operator/' + ${editOperator.getId()}}" method="post" class="mx-auto mb-5"
+                  th:object="${editOperator}">
+                <h3 class="fw-bold">Редактировать Оператора</h3>
+                <div class="mb-3">
+                    <label for="operatorName" class="form-label">Имя</label>
+                    <input type="text" class="form-control" id="operatorName" th:value="${editOperator.getName()}"
+                           th:field="*{name}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="operatorSurname" class="form-label">Фамилия</label>
+                    <input type="text" class="form-control" id="operatorSurname" th:value="${editOperator.getSurname()}"
+                           th:field="*{surname}" required>
+                </div>
+                <div class="form-floating">
+                    <select class="form-select" id="department" aria-label="Floating label select example"
+                            th:field="*{department}">
+                        <option selected th:value="${editOperator.getDepartment().getId()}"
+                                th:text="${editOperator.getDepartment().getName()}"></option>
+                        <option th:each="department : ${departmentList}" th:value="${department.id}"
+                                th:text="${department.name}"></option>
+                    </select>
+                    <label for="department" class="form-label">Выберите Департамент</label>
+                </div>
+                <div class="mt-3">
+                    <a th:href="@{'/departments'}" class="btn btn-secondary">Назад</a>
+                    <button type="submit" class="btn btn-success">Сохранить изменения</button>
+                    <a th:href="@{'/delete-operator/' + ${editOperator.getId()}}" class="btn btn-danger">Удалить
+                        Оператора</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

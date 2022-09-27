@@ -11,10 +11,13 @@
                     <h5 th:if="${!request.isHandled()}" th:text="'*(Новая)'" style="color: red;"></h5>
                     <h5 th:text="'Заявка от ' + ${request.userName}"></h5>
                 </div>
-                <h6 th:text="'Курс: ' + ${request.course.name}"></h6>
+                <h6 th:text="'Курс: ' + ${request.course.name}" class="text-success mt-2 mb-2"></h6>
                 <p th:text="${request.comment}"></p>
-                <p th:text="'Тел: ' + ${request.phone}"></p>
-                <a th:href="@{'/handle-request/' + ${request.getId()}}" class="btn btn-primary">Подробнее</a>
+                <div class="d-flex align-self-center">
+                    <p th:text="'Тел: ' + ${request.phone}"></p>
+                    <a th:href="@{'/handle-request/' + ${request.getId()}}" class="mx-3">Подробнее</a>
+                </div>
+
             </div>
         </div>
     </div>

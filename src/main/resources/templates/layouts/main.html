@@ -53,11 +53,8 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" th:href="@{'/courses'}">Курсы</a></li>
-                                    <li><a class="dropdown-item" href="#">Операторы</a></li>
-                                    <!--                                <li>-->
-                                    <!--                                    <hr class="dropdown-divider">-->
-                                    <!--                                </li>-->
-                                    <!--                                <li><a class="dropdown-item" href="#">Something else here</a></li>-->
+                                    <li><a class="dropdown-item" th:href="@{'/departments'}">Департаменты</a></li>
+                                    <li><a class="dropdown-item" th:href="@{'/operators'}">Операторы</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -98,7 +95,7 @@
                         <textarea id="comment" cols="30" rows="5" class="form-control" th:field="*{comment}"></textarea>
                         <div class="mb-3">
                             <label for="phoneNumber" class="form-label">Phone</label>
-                            <input type="number" class="form-control" id="phoneNumber" placeholder="insert phone number"
+                            <input type="tel" class="form-control" id="phoneNumber" placeholder="insert phone number"
                                    th:field="*{phone}" required>
                         </div>
                         <div class="modal-footer">

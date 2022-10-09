@@ -1,7 +1,8 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
-      layout:decorate="layouts/main">
+      layout:decorate="layouts/main"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
 <div layout:fragment="content">
     <div class="row row-cols-3 g-2 mt-5">
@@ -15,7 +16,7 @@
                 <p th:text="${request.comment}"></p>
                 <div class="d-flex align-self-center">
                     <p th:text="'Тел: ' + ${request.phone}"></p>
-                    <a th:href="@{'/handle-request/' + ${request.getId()}}" class="mx-3">Подробнее</a>
+                    <a sec:authorize="hasAnyRole('ROLE_SUPERVISOR')" th:href="@{'/handle-request/' + ${request.getId()}}" class="mx-3">Подробнее</a>
                 </div>
 
             </div>

@@ -10,7 +10,7 @@
 <div layout:fragment="content">
     <div class="row">
         <div class="col-lg-6 mx-auto mt-5">
-            <form th:action="@{'/edit-department/' + ${editDepartment.getId()}}" method="post" class="mx-auto mb-5"
+            <form th:action="@{'/departments/edit/' + ${editDepartment.getId()}}" method="post" class="mx-auto mb-5"
                   th:object="${editDepartment}">
                 <h3 class="fw-bold">Редактировать Департамент</h3>
                 <div class="mb-3">
@@ -22,7 +22,7 @@
                 <div class="mt-3">
                     <a th:href="@{'/departments'}" class="btn btn-secondary">Назад</a>
                     <button type="submit" class="btn btn-success">Сохранить изменения</button>
-                    <a th:href="@{'/delete-department/' + ${editDepartment.getId()}}" class="btn btn-danger">Удалить
+                    <a th:href="@{'/departments/delete/' + ${editDepartment.getId()}}" class="btn btn-danger">Удалить
                         Департамент</a>
                 </div>
             </form>

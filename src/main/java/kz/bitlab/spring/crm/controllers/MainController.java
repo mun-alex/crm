@@ -2,91 +2,97 @@ package kz.bitlab.spring.crm.controllers;
 
 import kz.bitlab.spring.crm.models.ApplicationRequest;
 import kz.bitlab.spring.crm.models.Operator;
-import kz.bitlab.spring.crm.repository.CourseRepository;
-import kz.bitlab.spring.crm.repository.OperatorRepository;
-import kz.bitlab.spring.crm.repository.RequestRepository;
+import kz.bitlab.spring.crm.services.CourseService;
+import kz.bitlab.spring.crm.services.OperatorService;
+import kz.bitlab.spring.crm.services.RequestService;
+import kz.bitlab.spring.crm.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class MainController {
 
     @Autowired
-    private RequestRepository requestRepository;
+    private RequestService requestService;
+    @Autowired
+    private CourseService courseService;
+    @Autowired
+    private OperatorService operatorService;
+    @Autowired
+    private UsersService usersService;
     @Autowired
     private ApplicationRequest applicationRequest;
-    @Autowired
-    private CourseRepository courseRepository;
-    @Autowired
-    private OperatorRepository operatorRepository;
 
     @GetMapping(value = "/")
     public String getIndex(Model model) {
         model.addAttribute("newRequest", applicationRequest);
-        model.addAttribute("courseList", courseRepository.findAll());
-        model.addAttribute("requestList", requestRepository.findAll());
+        model.addAttribute("courseList", courseService.getAllCourses());
+        model.addAttribute("requestList", requestService.getAllRequests());
+        model.addAttribute("currentUser", usersService.getUserData());
         return "index";
     }
 
     @GetMapping(value = "/unhandled-requests")
     public String getUnhandledRequests(Model model) {
         model.addAttribute("newRequest", applicationRequest);
-        model.addAttribute("requestList", requestRepository.findAllByHandledFalse());
+        model.addAttribute("requestList", requestService.getAllRequestsByHandledFalse());
+        model.addAttribute("currentUser", usersService.getUserData());
+        model.addAttribute("courseList", courseService.getAllCourses());
         return "index";
     }
 
     @GetMapping(value = "/handled-requests")
     public String getHandledRequests(Model model) {
         model.addAttribute("newRequest", applicationRequest);
-        model.addAttribute("requestList", requestRepository.findAllByHandledTrue());
+        model.addAttribute("requestList", requestService.getAllRequestsByHandledTrue());
+        model.addAttribute("currentUser", usersService.getUserData());
+        model.addAttribute("courseList", courseService.getAllCourses());
         return "index";
     }
 
     @PostMapping(value = "/add-request")
+    @PreAuthorize("hasAnyRole('ROLE_SUPERVISOR', 'ROLE_OPERATOR')")
     public String addRequest(@ModelAttribute(name = "newRequest") ApplicationRequest newRequest) {
         newRequest.setHandled(false);
-        requestRepository.save(newRequest);
+        requestService.addRequest(newRequest);
         return "redirect:/";
     }
 
     @GetMapping(value = "/handle-request/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_SUPERVISOR', 'ROLE_OPERATOR')")
     public String getDetails(Model model, @PathVariable(name = "id") Long id) {
-        ApplicationRequest request = requestRepository.findById(id).orElseThrow();
+        ApplicationRequest request = requestService.getRequestById(id);
         model.addAttribute("editRequest", request);
         model.addAttribute("newRequest", applicationRequest);
 
-        List<Operator> operatorList = operatorRepository.findAll();
+        List<Operator> operatorList = operatorService.getAllOperators();
         operatorList.removeAll(request.getOperatorList());
         model.addAttribute("operatorList", operatorList);
 
         model.addAttribute("operatorListUnassigned", request.getOperatorList());
-
+        model.addAttribute("currentUser", usersService.getUserData());
         return "handleRequest";
     }
 
     @PostMapping(value = "/handle-request/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_SUPERVISOR', 'ROLE_OPERATOR')")
     public String handleRequest(@PathVariable(name = "id") Long id) {
 
-        Optional<ApplicationRequest> optional = requestRepository.findById(id);
-        optional.ifPresent(request -> {
-            request.setHandled(true);
-            requestRepository.save(request);
-        });
+        ApplicationRequest request = requestService.getRequestById(id);
+        request.setHandled(true);
+        requestService.addRequest(request);
         return "redirect:/";
     }
 
     @GetMapping(value = "/delete-request/{id}")
-    public String deleteRequest(Model model,
-                                @PathVariable(name = "id") Long id) {
-        Optional<ApplicationRequest> optional = requestRepository.findById(id);
-        optional.ifPresent(request -> {
-            requestRepository.deleteById(id);
-        });
+    @PreAuthorize("hasAnyRole('ROLE_SUPERVISOR', 'ROLE_OPERATOR')")
+    public String deleteRequest(@PathVariable(name = "id") Long id) {
+        requestService.deleteRequest(id);
         return "redirect:/";
     }
 }

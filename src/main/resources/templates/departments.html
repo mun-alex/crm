@@ -19,8 +19,8 @@
                 <tr th:each="department : ${departmentList}">
                     <th scope="row" th:text="${department.getId()}"></th>
                     <td th:text="${department.getName()}"></td>
-                    <td><a th:href="@{'/edit-department/' + ${department.getId()}}" class="btn btn-primary">EDIT</a></td>
-                    <td><a th:href="@{'/delete-department/' + ${department.getId()}}" class="btn btn-danger">DELETE</a></td>
+                    <td><a th:href="@{'/departments/edit/' + ${department.getId()}}" class="btn btn-primary">EDIT</a></td>
+                    <td><a th:href="@{'/departments/delete/' + ${department.getId()}}" class="btn btn-danger">DELETE</a></td>
                 </tr>
                 </tbody>
             </table>
@@ -36,7 +36,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form th:action="@{'/add-department'}" method="post" class="mx-auto mb-5" th:object="${newDepartment}">
+                    <form th:action="@{'/departments/add'}" method="post" class="mx-auto mb-5" th:object="${newDepartment}">
                         <div class="mb-3">
                             <label for="departmentName" class="form-label">Название Департамента</label>
                             <input type="text" class="form-control" id="departmentName" placeholder="Введите наименование департамента"

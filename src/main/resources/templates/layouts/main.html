@@ -1,7 +1,8 @@
 <!doctype html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout>
+      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -21,6 +22,17 @@
         <nav class="navbar bg-success p-2 text-dark bg-opacity-75">
             <div class="container-fluid">
                 <a class="navbar-brand text-white" th:href="@{'/'}">CRM Система</a>
+                <ul class="nav ms-auto">
+                    <li sec:authorize="isAnonymous()" class="nav-item mx-auto">
+                        <a th:href="@{'/users/login'}" class="nav-link text-white">Войти</a>
+                    </li>
+                    <li sec:authorize="isAuthenticated()" class="nav-item">
+                        <a th:href="@{'/users/profile'}" class="nav-link text-dark fw-bold" th:text="${currentUser.fullName}"></a>
+                    </li>
+                    <li sec:authorize="isAuthenticated()" class="nav-item">
+                        <a class="nav-link text-white" href="JavaScript:void(0)" onclick="document.getElementById('logoutFormId').submit()">Выйти</a>
+                    </li>
+                </ul>
                 <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
                         data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
                     <span class="navbar-toggler-icon"></span>
@@ -42,11 +54,11 @@
                             <li class="nav-item">
                                 <a class="nav-link" th:href="@{'/handled-requests'}">Обработанные заявки</a>
                             </li>
-                            <li class="nav-item">
+                            <li sec:authorize="hasAnyRole('ROLE_SUPERVISOR')" class="nav-item">
                                 <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#addRequest">Добавить
                                     заявку</a>
                             </li>
-                            <li class="nav-item dropdown">
+                            <li sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERVISOR')" class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                    aria-expanded="false">
                                     Справочники
@@ -55,11 +67,13 @@
                                     <li><a class="dropdown-item" th:href="@{'/courses'}">Курсы</a></li>
                                     <li><a class="dropdown-item" th:href="@{'/departments'}">Департаменты</a></li>
                                     <li><a class="dropdown-item" th:href="@{'/operators'}">Операторы</a></li>
+                                    <li><a class="dropdown-item" th:href="@{'/users'}">Пользователи</a></li>
                                 </ul>
                             </li>
                         </ul>
                     </div>
                 </div>
+                <form th:action="@{'/logout'}" method="post" id="logoutFormId" sec:authorize="isAuthenticated()"></form>
             </div>
         </nav>
     </div>
@@ -80,13 +94,14 @@
                 <form th:action="@{'/add-request'}" method="post" class="mx-auto mb-5" th:object="${newRequest}">
                     <div class="mb-3">
                         <label for="userName" class="form-label">Имя пользователя</label>
-                        <input type="text" class="form-control" id="userName" placeholder="insert user name"
+                        <input type="text" class="form-control" id="userName" placeholder="Введите имя пользователя"
                                th:field="*{userName}" required>
                     </div>
                     <div class="form-floating">
                         <select class="form-select" id="courseName" aria-label="Floating label select example"
                                 th:field="*{course}">
-                            <option th:each="course : ${courseList}" th:value="${course.id}" th:text="${course.name} + ' | ' + ${course.price}"></option>
+                            <option th:each="course : ${courseList}" th:value="${course.id}"
+                                    th:text="${course.name} + ' | ' + ${course.price}"></option>
                         </select>
                         <label for="courseName" class="form-label">Выберите курс</label>
                     </div>
@@ -94,8 +109,8 @@
                         <label for="comment" class="form-label">Комментарий</label>
                         <textarea id="comment" cols="30" rows="5" class="form-control" th:field="*{comment}"></textarea>
                         <div class="mb-3">
-                            <label for="phoneNumber" class="form-label">Phone</label>
-                            <input type="tel" class="form-control" id="phoneNumber" placeholder="insert phone number"
+                            <label for="phoneNumber" class="form-label">Номер телефона</label>
+                            <input type="tel" class="form-control" id="phoneNumber" placeholder="Введите номер телефона"
                                    th:field="*{phone}" required>
                         </div>
                         <div class="modal-footer">

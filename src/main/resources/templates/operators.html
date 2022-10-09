@@ -23,8 +23,8 @@
                     <td th:text="${operator.getName()}"></td>
                     <td th:text="${operator.getSurname()}"></td>
                     <td th:text="${operator.getDepartment().getName()}"></td>
-                    <td><a th:href="@{'/edit-operator/' + ${operator.getId()}}" class="btn btn-primary">EDIT</a></td>
-                    <td><a th:href="@{'/delete-operator/' + ${operator.getId()}}" class="btn btn-danger">DELETE</a></td>
+                    <td><a th:href="@{'/operators/edit/' + ${operator.getId()}}" class="btn btn-primary">EDIT</a></td>
+                    <td><a th:href="@{'/operators/delete/' + ${operator.getId()}}" class="btn btn-danger">DELETE</a></td>
                 </tr>
                 </tbody>
             </table>
@@ -40,7 +40,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form th:action="@{'/add-operator'}" method="post" class="mx-auto mb-5" th:object="${newOperator}">
+                    <form th:action="@{'/operators/add'}" method="post" class="mx-auto mb-5" th:object="${newOperator}">
                         <div class="mb-3">
                             <label for="operatorName" class="form-label">Имя</label>
                             <input type="text" class="form-control" id="operatorName" placeholder="Введите имя оператора"

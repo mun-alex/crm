@@ -21,8 +21,8 @@
                     <th scope="row" th:text="${course.getId()}"></th>
                     <td th:text="${course.getName()}"></td>
                     <td th:text="${course.getPrice()}"></td>
-                    <td><a th:href="@{'/edit-course/' + ${course.getId()}}" class="btn btn-primary">EDIT</a></td>
-                    <td><a th:href="@{'/delete-course/' + ${course.getId()}}" class="btn btn-danger">DELETE</a></td>
+                    <td><a th:href="@{'/courses/edit/' + ${course.getId()}}" class="btn btn-primary">EDIT</a></td>
+                    <td><a th:href="@{'/courses/delete/' + ${course.getId()}}" class="btn btn-danger">DELETE</a></td>
                 </tr>
                 </tbody>
             </table>
@@ -38,7 +38,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form th:action="@{'/add-course'}" method="post" class="mx-auto mb-5" th:object="${newCourse}">
+                    <form th:action="@{'/courses/add'}" method="post" class="mx-auto mb-5" th:object="${newCourse}">
                         <div class="mb-3">
                             <label for="courseName" class="form-label">Название Курса</label>
                             <input type="text" class="form-control" id="courseName" placeholder="Введите наименование курса"

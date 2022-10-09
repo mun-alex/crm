@@ -10,7 +10,7 @@
 <div layout:fragment="content">
     <div class="row">
         <div class="col-lg-6 mx-auto mt-5">
-            <form th:action="@{'/edit-course/' + ${editCourse.getId()}}" method="post" class="mx-auto mb-5"
+            <form th:action="@{'/courses/edit/' + ${editCourse.getId()}}" method="post" class="mx-auto mb-5"
                   th:object="${editCourse}">
                 <h3 class="fw-bold">Редактировать Курс</h3>
                 <div class="mb-3">
@@ -29,9 +29,9 @@
                            th:field="*{price}" required>
                 </div>
                 <div class="mt-3">
-                    <a th:href="@{'/'}" class="btn btn-secondary">Назад</a>
+                    <a th:href="@{'/courses'}" class="btn btn-secondary">Назад</a>
                     <button type="submit" class="btn btn-success">Сохранить изменения</button>
-                    <a th:href="@{'/delete-course/' + ${editCourse.getId()}}" class="btn btn-danger">Удалить Курс</a>
+                    <a th:href="@{'/courses/delete/' + ${editCourse.getId()}}" class="btn btn-danger">Удалить Курс</a>
                 </div>
             </form>
         </div>

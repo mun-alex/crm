@@ -10,7 +10,7 @@
 <div layout:fragment="content">
     <div class="row">
         <div class="col-lg-6 mx-auto mt-5">
-            <form th:action="@{'/edit-operator/' + ${editOperator.getId()}}" method="post" class="mx-auto mb-5"
+            <form th:action="@{'/operators/edit/' + ${editOperator.getId()}}" method="post" class="mx-auto mb-5"
                   th:object="${editOperator}">
                 <h3 class="fw-bold">Редактировать Оператора</h3>
                 <div class="mb-3">
@@ -34,9 +34,9 @@
                     <label for="department" class="form-label">Выберите Департамент</label>
                 </div>
                 <div class="mt-3">
-                    <a th:href="@{'/departments'}" class="btn btn-secondary">Назад</a>
+                    <a th:href="@{'/operators'}" class="btn btn-secondary">Назад</a>
                     <button type="submit" class="btn btn-success">Сохранить изменения</button>
-                    <a th:href="@{'/delete-operator/' + ${editOperator.getId()}}" class="btn btn-danger">Удалить
+                    <a th:href="@{'/operators/delete/' + ${editOperator.getId()}}" class="btn btn-danger">Удалить
                         Оператора</a>
                 </div>
             </form>

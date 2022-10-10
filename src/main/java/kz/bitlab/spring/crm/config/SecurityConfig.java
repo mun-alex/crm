@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.exceptionHandling().accessDeniedPage("/403");
 
         http.formLogin()
-                .loginPage("/login").permitAll()
+                .loginPage(Constants.API_USERS + "/login").permitAll()
                 .usernameParameter("user_email")
                 .passwordParameter("user_password")
                 .loginProcessingUrl("/auth").permitAll()

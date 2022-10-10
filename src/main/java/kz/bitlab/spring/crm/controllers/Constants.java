@@ -5,4 +5,5 @@ public class Constants {
     public static final String API_DEPARTMENTS = "/departments";
     public static final String API_OPERATORS = "/operators";
     public static final String API_USERS = "/users";
+    public static final String REST_API_BASE = "/api";
 }

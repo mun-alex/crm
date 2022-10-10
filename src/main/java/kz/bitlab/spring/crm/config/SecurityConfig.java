@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("user_email")
                 .passwordParameter("user_password")
                 .loginProcessingUrl("/auth").permitAll()
-                .failureUrl("/login?error")
+                .failureUrl(Constants.API_USERS + "/login?error")
                 .defaultSuccessUrl(Constants.API_USERS + "/profile");
 
         http.logout()

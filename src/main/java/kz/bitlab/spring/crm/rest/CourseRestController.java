@@ -9,33 +9,33 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(Constants.REST_API_BASE)
+@RequestMapping(Constants.REST_API_BASE + "/courses")
 @RequiredArgsConstructor
 public class CourseRestController {
 
     private final CourseService courseService;
 
-    @GetMapping(value = "/courses")
+    @GetMapping
     List<Course> getAllCourses() {
         return courseService.getAllCourses();
     }
 
-    @GetMapping(value = "/courses/{id}")
+    @GetMapping(value = "/{id}")
     Course getCourseById(@PathVariable(name = "id") Long id) {
         return courseService.getCourseById(id);
     }
 
-    @PostMapping(value = "/courses")
+    @PostMapping
     void addCourse(@RequestBody Course course) {
         courseService.addCourse(course);
     }
 
-    @PutMapping(value = "/courses")
+    @PutMapping
     void updateCourse(@RequestBody Course course) {
         courseService.addCourse(course);
     }
 
-    @DeleteMapping(value = "/courses/{id}")
+    @DeleteMapping(value = "/{id}")
     void deleteCourse(@PathVariable(name = "id") Long id) {
         courseService.deleteCourse(id);
     }

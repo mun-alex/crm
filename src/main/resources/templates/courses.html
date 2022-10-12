@@ -5,6 +5,9 @@
 <body>
 <div layout:fragment="content">
     <h3  class="fw-bold mt-3">Справочник Курсов</h3>
+    <div id="editCourseAlertSuccess" style="visibility: hidden;" class="alert alert-success" role="alert">
+        Успешно сохранено!
+    </div>
     <a href="" class="btn btn-primary mt-5 mb-3" data-bs-toggle="modal" data-bs-target="#addCourse">+ Добавить Курс</a>
     <div class="row mt-3">
         <div class="row">
@@ -16,12 +19,13 @@
                     <th scope="col">Цена</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr th:each="course : ${courseList}">
+                <tbody id="coursesTable">
+                <tr th:each="course : ${courseList}" th:id="'courseRow' + ${course.id}">
                     <th scope="row" th:text="${course.getId()}"></th>
-                    <td th:text="${course.getName()}"></td>
-                    <td th:text="${course.getPrice()}"></td>
-                    <td><a th:href="@{'/courses/edit/' + ${course.getId()}}" class="btn btn-primary">EDIT</a></td>
+                    <td th:text="${course.getName()}" th:id="'courseName' + ${course.id}"></td>
+                    <td th:text="${course.getPrice()}" th:id="'coursePrice' + ${course.id}"></td>
+                    <td><a class="btn btn-primary" th:onclick="'getCourse(' + ${course.id} + ')'"
+                           data-bs-toggle="modal" data-bs-target="#editCourse">EDIT</a></td>
                     <td><a th:href="@{'/courses/delete/' + ${course.getId()}}" class="btn btn-danger">DELETE</a></td>
                 </tr>
                 </tbody>
@@ -29,7 +33,7 @@
         </div>
     </div>
 
-    <!--Modal-->
+    <!--Modal add new course-->
     <div class="modal fade" id="addCourse" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -54,8 +58,44 @@
                                    th:field="*{price}" required>
                         </div>
                         <div class="modal-footer">
-                            <a th:href="@{'/courses'}" class="btn btn-secondary">Закрыть</a>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                             <button type="submit" class="btn btn-success">Отправить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Modal add edit course-->
+    <div class="modal fade" id="editCourse" tabindex="-1" aria-labelledby="editCourseModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editCourseModalLabel">Редактировать Курс</h5>
+                    <div id="editCourseAlert" style="visibility: hidden;" class="alert alert-danger" role="alert">
+                        Возникла ошибка!
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="mx-auto mb-5">
+                        <input type="hidden" id="editCourseId">
+                        <div class="mb-3">
+                            <label for="editCourseName" class="form-label">Название Курса</label>
+                            <input type="text" class="form-control" id="editCourseName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editCourseDescription" class="form-label">Описание</label>
+                            <textarea id="editCourseDescription" cols="30" rows="5" class="form-control"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editCoursePrice" class="form-label">Цена</label>
+                            <input type="number" class="form-control" id="editCoursePrice" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="editCourseCloseBtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                            <a class="btn btn-success" onclick="updateCourse()">Сохранить</a>
                         </div>
                     </form>
                 </div>

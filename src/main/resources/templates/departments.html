@@ -4,7 +4,10 @@
       layout:decorate="layouts/main">
 <body>
 <div layout:fragment="content">
-    <h3  class="fw-bold mt-3">Справочник Департаментов</h3>
+    <h3 class="fw-bold mt-3">Справочник Департаментов</h3>
+    <div id="editDepartmentAlertSuccess" style="visibility: hidden;" class="alert alert-success" role="alert">
+        Успешно сохранено!
+    </div>
     <a href="" class="btn btn-primary mt-5 mb-3" data-bs-toggle="modal" data-bs-target="#addDepartment">+ Добавить Департамент</a>
     <div class="row mt-3">
         <div class="row">
@@ -18,8 +21,9 @@
                 <tbody>
                 <tr th:each="department : ${departmentList}">
                     <th scope="row" th:text="${department.getId()}"></th>
-                    <td th:text="${department.getName()}"></td>
-                    <td><a th:href="@{'/departments/edit/' + ${department.getId()}}" class="btn btn-primary">EDIT</a></td>
+                    <td th:text="${department.getName()}" th:id="'departmentName' + ${department.id}"></td>
+                    <td><a class="btn btn-primary" th:onclick="'getDepartment(' + ${department.id} + ')'"
+                           data-bs-toggle="modal" data-bs-target="#editDepartment">EDIT</a></td>
                     <td><a th:href="@{'/departments/delete/' + ${department.getId()}}" class="btn btn-danger">DELETE</a></td>
                 </tr>
                 </tbody>
@@ -45,6 +49,34 @@
                         <div class="modal-footer">
                             <a th:href="@{'/departments'}" class="btn btn-secondary">Закрыть</a>
                             <button type="submit" class="btn btn-success">Отправить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Modal edit-->
+    <div class="modal fade" id="editDepartment" tabindex="-1" aria-labelledby="editDepartmentModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editDepartmentModalLabel">Редактировать Департамент</h5>
+                    <div id="editDepartmentAlert" style="visibility: hidden;" class="alert alert-danger" role="alert">
+                        Возникла ошибка!
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="mx-auto mb-5">
+                        <input type="hidden" id="editDepartmentId">
+                        <div class="mb-3">
+                            <label for="editDepartmentName" class="form-label">Название Департамента</label>
+                            <input type="text" class="form-control" id="editDepartmentName" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="editDepartmentCloseBtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                            <a class="btn btn-success" onclick="updateDepartment()">Сохранить</a>
                         </div>
                     </form>
                 </div>

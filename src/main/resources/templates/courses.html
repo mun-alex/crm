@@ -19,11 +19,11 @@
                     <th scope="col">Цена</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr th:each="course : ${courseList}">
+                <tbody id="coursesTable">
+                <tr th:each="course : ${courseList}" th:id="'courseRow' + ${course.id}">
                     <th scope="row" th:text="${course.getId()}"></th>
-                    <td th:text="${course.getName()}"></td>
-                    <td th:text="${course.getPrice()}"></td>
+                    <td th:text="${course.getName()}" th:id="'courseName' + ${course.id}"></td>
+                    <td th:text="${course.getPrice()}" th:id="'coursePrice' + ${course.id}"></td>
                     <td><a class="btn btn-primary" th:onclick="'getCourse(' + ${course.id} + ')'"
                            data-bs-toggle="modal" data-bs-target="#editCourse">EDIT</a></td>
                     <td><a th:href="@{'/courses/delete/' + ${course.getId()}}" class="btn btn-danger">DELETE</a></td>
@@ -94,10 +94,8 @@
                             <input type="number" class="form-control" id="editCoursePrice" required>
                         </div>
                         <div class="modal-footer">
-<!--                            <a th:href="@{'/courses'}" class="btn btn-secondary">Закрыть</a>-->
                             <button id="editCourseCloseBtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                             <a class="btn btn-success" onclick="updateCourse()">Сохранить</a>
-<!--                            <button type="submit" class="btn btn-success">Отправить</button>-->
                         </div>
                     </form>
                 </div>

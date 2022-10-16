@@ -1,0 +1,1 @@
+insert into users_roles_list (users_id, roles_list_id) values (1, 1);

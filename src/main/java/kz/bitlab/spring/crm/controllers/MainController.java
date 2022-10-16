@@ -95,4 +95,11 @@ public class MainController {
         requestService.deleteRequest(id);
         return "redirect:/";
     }
+
+    @GetMapping(value = "/403")
+    public String accessDenied(Model model) {
+        model.addAttribute("newRequest", applicationRequest);
+        model.addAttribute("currentUser", usersService.getUserData());
+        return "/403";
+    }
 }

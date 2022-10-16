@@ -41,12 +41,12 @@ public class UsersController {
         return "users";
     }
 
-    @GetMapping(value = "/403")
-    public String accessDenied(Model model) {
-        model.addAttribute("newRequest", applicationRequest);
-        model.addAttribute("currentUser", usersService.getUserData());
-        return "/403";
-    }
+//    @GetMapping(value = "/403")
+//    public String accessDenied(Model model) {
+//        model.addAttribute("newRequest", applicationRequest);
+//        model.addAttribute("currentUser", usersService.getUserData());
+//        return "/403";
+//    }
 
     @GetMapping(value = "/login")
     public String login(Model model) {

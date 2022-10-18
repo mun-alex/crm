@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   backend:
-    build: ~/Desktop/jars/crm/
+    build: /home/alex/IdeaProjects/bitlab/Spring_1_06092022/crm
     image: crm_backend
     container_name: crm_backend
     depends_on:

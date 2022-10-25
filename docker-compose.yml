@@ -2,18 +2,18 @@ version: '3.7'
 
 services:
   backend:
-    build: /home/alex/IdeaProjects/bitlab/Spring_1_06092022/crm
-    image: crm_backend
-    container_name: crm_backend
+    build: .
+    image: crm
+    container_name: crm-backend
     depends_on:
       - db
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
       - SPRING_DATASOURCE_USERNAME=bitlab
       - SPRING_DATASOURCE_PASSWORD=bitlab
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=none
     ports:
-      - 8002:8000
+      - 8001:8001
 
   db:
     image: postgres

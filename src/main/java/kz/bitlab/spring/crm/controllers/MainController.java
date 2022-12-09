@@ -6,6 +6,7 @@ import kz.bitlab.spring.crm.services.CourseService;
 import kz.bitlab.spring.crm.services.OperatorService;
 import kz.bitlab.spring.crm.services.RequestService;
 import kz.bitlab.spring.crm.services.UsersService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
+@Slf4j
 public class MainController {
 
     @Autowired
@@ -98,6 +100,7 @@ public class MainController {
 
     @GetMapping(value = "/403")
     public String accessDenied(Model model) {
+        log.info("MainController accessDenied");
         model.addAttribute("newRequest", applicationRequest);
         model.addAttribute("currentUser", usersService.getUserData());
         return "/403";

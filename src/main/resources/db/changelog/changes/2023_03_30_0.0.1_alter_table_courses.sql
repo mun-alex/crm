@@ -1,0 +1,1 @@
+alter table courses alter column description type text;

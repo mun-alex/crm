@@ -45,4 +45,14 @@
                 splitStatements="true"
                 stripComments="true"/>
     </changeSet>
+    <changeSet id="2023_03_30_0.0.1_alter_table_courses" author="a.mun">
+        <sqlFile
+                dbms="postgresql"
+                encoding="utf8"
+                endDelimiter=";"
+                path="changes/2023_03_30_0.0.1_alter_table_courses.sql"
+                relativeToChangelogFile="true"
+                splitStatements="true"
+                stripComments="true"/>
+    </changeSet>
 </databaseChangeLog>
